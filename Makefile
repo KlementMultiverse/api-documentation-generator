@@ -1,19 +1,31 @@
-.PHONY: install run test docker-build docker-run clean
+.PHONY: install run demo test docker-build docker-run analyze clean
 
 install:
-	pip install -r requirements.txt 2>/dev/null || echo "No requirements"
+	pip install -r requirements.txt
 
-run:
-	python -m src.main 2>/dev/null || python main.py
+demo:
+	python analyzer.py demo
+
+analyze:
+	@echo "Usage: make analyze FILE=path/to/logfile.log"
+	@if [ -z "$(FILE)" ]; then \
+		echo "Example: make analyze FILE=sample_logs/error.log"; \
+		python analyzer.py demo; \
+	else \
+		python analyzer.py analyze $(FILE); \
+	fi
 
 test:
-	pytest tests/ 2>/dev/null || echo "No tests yet"
+	pytest tests/ -v
 
 docker-build:
 	docker-compose build
 
 docker-run:
-	docker-compose up -d
+	docker-compose up
+
+docker-demo:
+	docker build -t log-analyzer . && docker run --rm log-analyzer python analyzer.py demo
 
 deploy-local:
 	make docker-run
@@ -21,3 +33,4 @@ deploy-local:
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
 	find . -type f -name '*.pyc' -delete 2>/dev/null
+	rm -rf reports/

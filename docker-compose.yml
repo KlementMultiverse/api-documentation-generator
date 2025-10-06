@@ -1,12 +1,14 @@
 version: '3.8'
 
 services:
-  app:
+  log-analyzer:
     build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - ENV=production
+    container_name: log-analyzer
     volumes:
-      - ./data:/app/data
-    restart: unless-stopped
+      - .:/app
+      - ./logs:/app/logs
+      - ./reports:/app/reports
+    environment:
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: python analyzer.py demo
