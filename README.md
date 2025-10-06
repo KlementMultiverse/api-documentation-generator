@@ -1,130 +1,126 @@
-# API Documentation Generator
+# api-documentation-generator
 
-> Auto-generate API docs from code
+[![Production Ready](https://img.shields.io/badge/Production-Ready-success?style=for-the-badge)](https://github.com/KlementMultiverse/api-documentation-generator)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/KlementMultiverse/api-documentation-generator)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/KlementMultiverse/api-documentation-generator/actions)
+[![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen?style=for-the-badge)](https://github.com/KlementMultiverse/api-documentation-generator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-[![Category](https://img.shields.io/badge/Category-LLM%20Applications-blue)]()
-[![Domain](https://img.shields.io/badge/Domain-E-commerce-green)]()
-[![Status](https://img.shields.io/badge/Status-Active-success)]()
-
-## 🎯 Overview
-
-Auto-generate API docs from code built with modern AI technologies including Ollama, DSPy.
-
-This project demonstrates practical applications in the **E-commerce** domain.
-
-## ✨ Features
-
-- Code parsing
-- Example generation
-- Markdown output
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.9+
-- pip or conda
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/KlementMultiverse/api-documentation-generator.git
-cd api-documentation-generator
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
-```
-
-### Usage
-
-```bash
-# Run the main application
-python src/main.py
-
-# Run with examples
-python examples/demo.py
-```
-
-## 📁 Project Structure
-
-```
-api-documentation-generator/
-├── src/              # Source code
-├── tests/            # Unit tests
-├── examples/         # Usage examples
-├── docs/             # Documentation
-├── requirements.txt  # Dependencies
-└── README.md         # This file
-```
-
-## 🛠️ Technology Stack
-
-- **Ollama**
-- **DSPy**
-
-## 🔧 Configuration
-
-Create a `.env` file in the root directory:
-
-```env
-# Add your API keys here (NEVER commit this file)
-OPENAI_API_KEY=your_key_here
-ANTHROPIC_API_KEY=your_key_here
-```
-
-## 📊 Examples
-
-Check the `examples/` directory for:
-- Basic usage examples
-- Advanced use cases
-- Integration patterns
-
-## 🧪 Testing
-
-```bash
-# Run tests
-pytest tests/
-
-# Run with coverage
-pytest --cov=src tests/
-```
-
-## 📝 Documentation
-
-See the `docs/` folder for detailed documentation:
-- Architecture overview
-- API reference
-- Deployment guide
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 👨‍💻 Author
-
-**Klement Gunndu** - GenAI Engineer
-
-- Portfolio: [klementmultiverse.github.io](https://klementmultiverse.github.io)
-- LinkedIn: [klement-gunndu](https://www.linkedin.com/in/klement-gunndu-601872351)
-- GitHub: [@KlementMultiverse](https://github.com/KlementMultiverse)
-
-## 🙏 Acknowledgments
-
-Built with Claude Code automation - part of my daily AI project challenge!
+> AI-powered API documentation generator
 
 ---
 
-*Generated on 2025-10-06 as part of the Daily AI Project initiative*
+## ⭐ Why This Project?
+
+- ✅ **Production-Ready**: Docker, CI/CD, full test coverage
+- ✅ **One-Click Deploy**: `make docker-run` and you're live
+- ✅ **Well-Documented**: Quick start, architecture, API docs
+- ✅ **Modern Stack**: Latest best practices and tools
+- ✅ **Open Source**: MIT licensed, contributions welcome
+
+---
+
+## 🚀 Quick Start
+
+### Using Docker (Recommended)
+```bash
+git clone https://github.com/KlementMultiverse/api-documentation-generator.git
+cd api-documentation-generator
+make docker-run
+```
+
+### Local Development
+```bash
+make install
+make run
+```
+
+---
+
+## 📚 Documentation
+
+- 📖 [Quick Start Guide](docs/QUICKSTART.md)
+- 🏗️ [Architecture](docs/ARCHITECTURE.md)
+- 💼 [Business Value](docs/BUSINESS.md)
+- 🔧 [API Documentation](docs/API.md)
+
+---
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+make install
+
+# Run locally
+make run
+
+# Run tests
+make test
+
+# Deploy with Docker
+make docker-run
+```
+
+---
+
+## 🌟 Features
+
+- 🐳 **Docker Support**: Containerized for easy deployment
+- 🧪 **Full Test Coverage**: Comprehensive test suite
+- 📖 **Extensive Documentation**: Multi-audience docs (students, CTOs, CEOs)
+- 🔄 **CI/CD Pipeline**: Automated testing and deployment
+- 🏗️ **SOLID Architecture**: Clean, maintainable code
+- ⚡ **Production-Grade**: Ready for real-world use
+- 🔒 **Security-First**: No exposed secrets, best practices
+- 📦 **One-Click Deploy**: Makefile automation
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📊 Project Stats
+
+![GitHub stars](https://img.shields.io/github/stars/KlementMultiverse/api-documentation-generator?style=social)
+![GitHub forks](https://img.shields.io/github/forks/KlementMultiverse/api-documentation-generator?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/KlementMultiverse/api-documentation-generator?style=social)
+
+---
+
+## 👨‍💻 Author
+
+**Klement Gunndu** - Automation Expert & AI/ML Engineer
+
+- 🌐 Portfolio: [klementmultiverse.github.io](https://klementmultiverse.github.io)
+- 💼 LinkedIn: [Connect with me](https://www.linkedin.com/in/klement-gunndu-601872351)
+- 📧 Open for opportunities in AI/ML and automation
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with modern DevOps practices
+- Automated with CI/CD pipelines
+- Tested and production-ready
+
+---
+
+**⭐ If you find this project useful, please consider giving it a star!**
+
+[![Star this repo](https://img.shields.io/github/stars/KlementMultiverse/api-documentation-generator?style=social)](https://github.com/KlementMultiverse/api-documentation-generator/stargazers)
