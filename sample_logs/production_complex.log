@@ -1,0 +1,77 @@
+[2024-10-06 09:15:00.123] INFO  [api-gateway] Request received: GET /api/users/12345
+[2024-10-06 09:15:00.145] INFO  [api-gateway] Forwarding to auth-service for token validation
+[2024-10-06 09:15:00.167] INFO  [auth-service] Validating JWT token: eyJhbGciOiJIUzI1NiIs...
+[2024-10-06 09:15:00.189] INFO  [auth-service] Token valid, user_id: 12345, expires: 2024-10-07
+[2024-10-06 09:15:00.201] INFO  [api-gateway] Auth successful, routing to user-service
+[2024-10-06 09:15:00.223] INFO  [user-service] Fetching user profile for user_id: 12345
+[2024-10-06 09:15:00.245] INFO  [user-service] Query: SELECT * FROM users WHERE id = 12345
+[2024-10-06 09:15:00.267] INFO  [database] Executing query on primary DB (db-master-01)
+[2024-10-06 09:15:00.289] INFO  [database] Query completed in 22ms, 1 row returned
+[2024-10-06 09:15:00.301] INFO  [user-service] User profile retrieved, enriching with metadata
+[2024-10-06 09:15:00.323] INFO  [user-service] Calling recommendation-service for user preferences
+[2024-10-06 09:15:00.345] INFO  [recommendation-service] Fetching recommendations for user: 12345
+[2024-10-06 09:15:00.367] INFO  [cache-service] Cache lookup: user:12345:recommendations
+[2024-10-06 09:15:00.389] INFO  [cache-service] Cache HIT, returning cached data (age: 45s)
+[2024-10-06 09:15:00.401] INFO  [recommendation-service] Recommendations retrieved from cache
+[2024-10-06 09:15:00.423] INFO  [api-gateway] Response ready, status: 200, time: 300ms
+[2024-10-06 09:15:00.445] INFO  [metrics] request.success: 1, request.latency: 300ms, cache.hit: 1
+
+[2024-10-06 09:15:05.567] INFO  [api-gateway] Request received: POST /api/orders/create
+[2024-10-06 09:15:05.589] INFO  [api-gateway] Forwarding to auth-service for token validation
+[2024-10-06 09:15:05.612] INFO  [auth-service] Validating JWT token: eyJhbGciOiJIUzI1NiIs...
+[2024-10-06 09:15:05.634] INFO  [auth-service] Token valid, user_id: 67890
+[2024-10-06 09:15:05.656] INFO  [api-gateway] Auth successful, routing to order-service
+[2024-10-06 09:15:05.678] INFO  [order-service] Creating new order for user: 67890
+[2024-10-06 09:15:05.701] INFO  [order-service] Validating cart items: 5 items, total: $234.50
+[2024-10-06 09:15:05.723] INFO  [inventory-service] Checking stock for 5 items
+[2024-10-06 09:15:05.745] WARN  [inventory-service] Low stock alert: item_id=9876, stock=2, requested=1
+[2024-10-06 09:15:05.767] INFO  [inventory-service] All items available in stock
+[2024-10-06 09:15:05.789] INFO  [order-service] Calling payment-service to process payment
+[2024-10-06 09:15:05.812] INFO  [payment-service] Processing payment: $234.50, method: credit_card
+[2024-10-06 09:15:05.834] INFO  [payment-service] Connecting to payment gateway (stripe.com)
+[2024-10-06 09:15:05.856] ERROR [payment-service] Connection timeout to payment gateway after 5000ms
+[2024-10-06 09:15:05.878] WARN  [payment-service] Retry attempt 1/3 for payment gateway connection
+[2024-10-06 09:15:06.901] ERROR [payment-service] Connection timeout to payment gateway after 5000ms
+[2024-10-06 09:15:06.923] WARN  [payment-service] Retry attempt 2/3 for payment gateway connection
+[2024-10-06 09:15:07.946] ERROR [payment-service] Connection timeout to payment gateway after 5000ms
+[2024-10-06 09:15:07.968] ERROR [payment-service] Payment gateway unavailable after 3 retries
+[2024-10-06 09:15:07.990] ERROR [payment-service] Failed to process payment, error: GATEWAY_TIMEOUT
+[2024-10-06 09:15:08.012] ERROR [order-service] Payment processing failed: GATEWAY_TIMEOUT
+[2024-10-06 09:15:08.034] ERROR [order-service] Rolling back order creation for user: 67890
+[2024-10-06 09:15:08.056] INFO  [inventory-service] Releasing reserved items for order
+[2024-10-06 09:15:08.078] ERROR [api-gateway] Request failed: POST /api/orders/create, status: 503
+[2024-10-06 09:15:08.101] ERROR [metrics] request.failure: 1, error.type: GATEWAY_TIMEOUT, service: payment-service
+
+[2024-10-06 09:15:10.234] INFO  [api-gateway] Request received: GET /api/products/search?q=laptop
+[2024-10-06 09:15:10.256] INFO  [search-service] Processing search query: 'laptop'
+[2024-10-06 09:15:10.278] INFO  [search-service] Querying Elasticsearch cluster
+[2024-10-06 09:15:10.301] ERROR [search-service] ElasticsearchException: CircuitBreakerException
+[2024-10-06 09:15:10.323] ERROR [search-service] Circuit breaker triggered: Too many requests
+[2024-10-06 09:15:10.345] ERROR [search-service] Current load: 95%, threshold: 80%
+[2024-10-06 09:15:10.367] ERROR [api-gateway] Search service unavailable: CIRCUIT_BREAKER_OPEN
+[2024-10-06 09:15:10.389] WARN  [api-gateway] Falling back to cached search results
+[2024-10-06 09:15:10.412] INFO  [cache-service] Returning stale cache for query: 'laptop' (age: 5m)
+[2024-10-06 09:15:10.434] WARN  [api-gateway] Response from cache (degraded mode), status: 200
+
+[2024-10-06 09:15:15.567] ERROR [database] Connection pool exhausted: 100/100 connections active
+[2024-10-06 09:15:15.589] ERROR [database] Unable to acquire connection after 30000ms timeout
+[2024-10-06 09:15:15.612] ERROR [user-service] Database connection timeout, operation failed
+[2024-10-06 09:15:15.634] ERROR [api-gateway] Service failure: user-service, error: DB_CONNECTION_TIMEOUT
+[2024-10-06 09:15:15.656] ERROR [metrics] database.pool.exhausted: 1, active_connections: 100
+
+[2024-10-06 09:15:20.789] CRITICAL [monitoring] Multiple service failures detected in last 60s
+[2024-10-06 09:15:20.812] CRITICAL [monitoring] Affected services: payment-service, search-service, user-service
+[2024-10-06 09:15:20.834] CRITICAL [monitoring] Alert triggered: CASCADING_FAILURE
+[2024-10-06 09:15:20.856] CRITICAL [monitoring] Incident created: INC-2024-10-06-001
+[2024-10-06 09:15:20.878] CRITICAL [monitoring] Paging on-call engineer: sre-team@company.com
+
+[2024-10-06 09:15:25.901] INFO  [auto-scaler] Detecting high error rate, initiating auto-scale
+[2024-10-06 09:15:25.923] INFO  [auto-scaler] Current instances: payment-service=3, search-service=5, user-service=4
+[2024-10-06 09:15:25.945] INFO  [auto-scaler] Target instances: payment-service=6, search-service=8, user-service=6
+[2024-10-06 09:15:25.967] INFO  [kubernetes] Scaling deployment: payment-service, replicas: 3 → 6
+[2024-10-06 09:15:30.123] INFO  [kubernetes] New pods starting: payment-service-7f9c-x, payment-service-8a3d-y
+[2024-10-06 09:15:35.234] INFO  [kubernetes] Pods ready: 6/6 payment-service instances healthy
+[2024-10-06 09:15:35.256] INFO  [payment-service] Service recovered, accepting requests
+[2024-10-06 09:15:35.278] INFO  [monitoring] Service health restored: payment-service
+[2024-10-06 09:15:40.345] INFO  [monitoring] All services operational, incident resolved
+[2024-10-06 09:15:40.367] INFO  [monitoring] Incident closed: INC-2024-10-06-001, duration: 20s
